@@ -1,24 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
+import ListadoLibros from './Components/ListadoLibros';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faBook } from '@fortawesome/free-solid-svg-icons';
+import DetalleLibros from './Components/DetalleLibro';
 
+import libros from './Resources/books.json';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p className='text-success'>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <>
+      <header className="bg-dark text-light d-flex">
+        <div className='h1 d-flex'>
+          <div className='mx-2 _insert'>
+            <FontAwesomeIcon icon={faPlus}/>
+          </div>
+          <div className='mx-2 _list'>
+            <FontAwesomeIcon icon={faBook}/>
+          </div>
+        </div>
+        <h1 className='text-center m-0 w-100'>Librería</h1>
       </header>
-    </div>
+      <body className='min-vh-100 _body'>
+        { 
+          libros ? (
+            <ListadoLibros libros={libros} />
+          ):
+            <>
+              <button /* onClick={regApi} */ className="btn-search">Buscar Personajes</button>
+            </>
+        }
+
+
+      </body>
+    </>
   );
 }
 
