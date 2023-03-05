@@ -2,35 +2,52 @@ import './App.css';
 import ListadoLibros from './Components/ListadoLibros';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faBook } from '@fortawesome/free-solid-svg-icons';
-import DetalleLibros from './Components/DetalleLibro';
+import FormAddLibro from './Components/FormAddLibro';
+import { useState, useEffect } from "react";
 
-import libros from './Resources/books.json';
-function App() {
+import JsonLibros from './Resources/books.json';
+
+function App() { 
+  const [ form, setForm ] = useState(false);
+  const [ libros, setLibros ] = useState(JsonLibros);
+
+    const setFormFalse = () => {
+      setForm(false);
+    }
+    const setFormTrue = () => {
+      setForm(true);
+    }
+  function cerrarForm () {
+    setForm(false);
+  };
+  const getNuevoLibro = (childdata) => {
+    setForm(false);
+    libros.books.push(childdata)
+  }
+
   return (
     <>
       <header className="bg-dark text-light d-flex">
         <div className='h1 d-flex'>
-          <div className='mx-2 _insert'>
+          <div className='mx-2 _insert' onClick={setFormTrue}>
             <FontAwesomeIcon icon={faPlus}/>
           </div>
-          <div className='mx-2 _list'>
+          <div className='mx-2 _list' onClick={setFormFalse}>
             <FontAwesomeIcon icon={faBook}/>
           </div>
         </div>
         <h1 className='text-center m-0 w-100'>Librería</h1>
       </header>
-      <body className='min-vh-100 _body'>
+      <div className='min-vh-100 _body'>
         { 
-          libros ? (
-            <ListadoLibros libros={libros} />
-          ):
+          form ? (
+              <FormAddLibro onSubmit={getNuevoLibro} onClose={cerrarForm}/>
+            ):
             <>
-              <button /* onClick={regApi} */ className="btn-search">Buscar Personajes</button>
+              <ListadoLibros libros={libros}/>
             </>
         }
-
-
-      </body>
+      </div>
     </>
   );
 }

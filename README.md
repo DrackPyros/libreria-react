@@ -1,7 +1,6 @@
 # Libreria React
 ## Packages
 * React
-* Sass
 * Boostrap
 
 ## Steps:
