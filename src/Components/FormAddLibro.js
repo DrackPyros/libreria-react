@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons'
 
 export default function FormAddLibro(props) {
+    const [ error, setError ] = useState(false);
     const [ datos, setDatos ] = useState({
       isbn: "",
       title: "",
@@ -15,7 +16,6 @@ export default function FormAddLibro(props) {
       website: "",
       category: ""
     });
-    // console.log(props);
     const handleInputChange = (e) => {
         setDatos({
             ...datos,
@@ -24,14 +24,21 @@ export default function FormAddLibro(props) {
     }
     const enviarDatos = (e) => {
         e.preventDefault();
-        // console.log(datos);
-        props.onSubmit(datos);
+        if(datos.isbn != ""){
+            props.onSubmit(datos);
+            setError(false);
+        }
+        else
+            setError(true);
     }
     return(
         <div className="w-75 mx-auto card">
             <form onSubmit={enviarDatos}>
-                <div className='card-header d-flex'>
+                <div className='card-header'>
                     <h2 className='m w-100 text-center'>Insertar Nuevo Libro</h2>
+                    {error ? (
+                        <h5 className="text-danger text-center"> ISBN requerido</h5>
+                    ): <></>}
                 </div>
                 <div className='card-body'>
                     <div>
@@ -58,9 +65,11 @@ export default function FormAddLibro(props) {
                         <p className='text-justify'><input className="w-100 rounded" type="text" name="description" onChange={handleInputChange}/></p>
                     </div>
                 </div>
-                <button type="submit" className='btn btn-primary w-25 mx-auto'>
-                    <FontAwesomeIcon icon={faFloppyDisk}/>
-                </button>
+                <div className="w-100 text-center">
+                    <button type="submit" className='btn btn-primary w-25 mx-auto'>
+                        <FontAwesomeIcon icon={faFloppyDisk}/>
+                    </button>
+                </div>
             </form>
         </div>
     )
